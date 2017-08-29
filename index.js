@@ -22,13 +22,12 @@ page.open(url,function (status) {
         if(status === "success") {
           console.log("Sudah dapat minion nya :D");
           page.render('minion.jpeg')
-          var result = null
-          var categories = document.getElementsByName("ui-breadcrumb")[0].children[0].innerText
-          var categories_split = categories.split(" > ")
 
-          var product_rating = document.getElementsByName("product-customer-reviews")[0].innerText
-          var product_rating_split = product_rating.split("/n")
-          result = page.evaluate(function () {
+          var result = page.evaluate(function (productID) {
+            var categories = document.getElementsByClassName("ui-breadcrumb")[0].children[0].innerText
+            var categories_split = categories.split(" > ")
+            var product_rating = document.getElementsByClassName("product-customer-reviews")[0].innerText
+            var product_rating_split = product_rating.split("\n")
             return ({
               status: 200,
               date: new Date(),
@@ -41,12 +40,13 @@ page.open(url,function (status) {
                 categories_name: categories_split[3]
               }],
               product_name: document.getElementsByClassName("product-name")[0].innerText,
-              product_ratting: `${product_rating_split[1]}${product_rating_split[2]}`,
+              product_rating: product_rating_split[1]+""+product_rating_split[2],
               product_rating_number_of_votes: product_rating_split[3],
               number_of_order : document.getElementsByClassName("order-num")[0].innerText,
-              number_of_pieces_available: document.getElementsByClassName("p-available-stock")[0].innerText
+              number_of_pieces_available: document.getElementsByClassName("p-available-stock")[0].innerText.slice(1,-1),
+              number_of_added_wishlist: document.getElementsByClassName("wishlist-num")[0].innerText.trim().slice(1,-1)
             })
-          })
+          },productID)
           console.log(JSON.stringify(result));
           phantom.exit()
         } else {
