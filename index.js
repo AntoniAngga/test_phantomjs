@@ -23,9 +23,21 @@ page.open(url,function (status) {
           console.log("Sudah dapat minion nya :D");
           page.render('minion.jpeg')
           var result = null
+          var categories = document.getElementsByName("ui-breadcrumb")[0].children[0].innerText
+          var categories_split = categories.split(" > ")
           result = page.evaluate(function () {
             return ({
-              product_name : document.getElementsByClassName("product-name")[0].innerText
+              status : 200,
+              date : new Date(),
+              product_id : productID,
+              categories : [{
+                categories_name : categories_split[1]
+              },{
+                categories_name : categories_split[2]
+              },{
+                categories_name : categories_split[3]
+              }],
+              product_name : document.getElementsByClassName("product-name")[0].innerText,
               
             })
           })
