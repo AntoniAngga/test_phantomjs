@@ -19,15 +19,19 @@ page.open(url,function (status) {
       }, productID)
 
       page.onLoadFinished = function(status) {
+        window.setTimeout(function () {
+          page.render(output);
+          phantom.exit();
+        }, 1000)
         if(status === "success") {
           console.log("Sudah dapat minion nya :D");
-          page.render('minion.jpeg')
-
           var result = page.evaluate(function (productID) {
             var categories = document.getElementsByClassName("ui-breadcrumb")[0].children[0].innerText
             var categories_split = categories.split(" > ")
             var product_rating = document.getElementsByClassName("product-customer-reviews")[0].innerText
             var product_rating_split = product_rating.split("\n")
+            $("#j-product-tabbed-pane > ul > li:nth-child(3) > a").click();
+            page.render('minion.jpeg')
             return ({
               status: 200,
               date: new Date(),
@@ -47,6 +51,7 @@ page.open(url,function (status) {
               number_of_added_wishlist: document.getElementsByClassName("wishlist-num")[0].innerText.trim().slice(1,-1)
             })
           },productID)
+          
           console.log(JSON.stringify(result));
           phantom.exit()
         } else {
