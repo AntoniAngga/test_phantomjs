@@ -41,10 +41,3 @@ page.open(url,function (status) {
     console.log("error brooo");
   }
 })
-
-// console.log('Step 2. Input Search Bar with Product ID')
-// page.evaluate(function(productID) {
-//   console.log('masuk evaluate dengan productID: ' + productID)
-//   document.getElementById('search-key').value = productID;
-//   document.querySelector('.header .searchbar-form .search-button').click();
-// })
