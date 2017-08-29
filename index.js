@@ -25,6 +25,9 @@ page.open(url,function (status) {
           var result = null
           var categories = document.getElementsByName("ui-breadcrumb")[0].children[0].innerText
           var categories_split = categories.split(" > ")
+
+          var product_rating = document.getElementsByName("product-customer-reviews")[0].innerText
+          var product_rating_split = product_rating.split("/n")
           result = page.evaluate(function () {
             return ({
               status : 200,
@@ -38,7 +41,7 @@ page.open(url,function (status) {
                 categories_name : categories_split[3]
               }],
               product_name : document.getElementsByClassName("product-name")[0].innerText,
-              
+              product_ratting : `${product_rating[1]}${product_rating[2]}`
             })
           })
           console.log(JSON.stringify(result));
