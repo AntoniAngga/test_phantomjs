@@ -30,18 +30,21 @@ page.open(url,function (status) {
           var product_rating_split = product_rating.split("/n")
           result = page.evaluate(function () {
             return ({
-              status : 200,
-              date : new Date(),
-              product_id : productID,
-              categories : [{
-                categories_name : categories_split[1]
+              status: 200,
+              date: new Date(),
+              product_id: productID,
+              categories: [{
+                categories_name: categories_split[1]
               },{
-                categories_name : categories_split[2]
+                categories_name: categories_split[2]
               },{
-                categories_name : categories_split[3]
+                categories_name: categories_split[3]
               }],
-              product_name : document.getElementsByClassName("product-name")[0].innerText,
-              product_ratting : `${product_rating[1]}${product_rating[2]}`
+              product_name: document.getElementsByClassName("product-name")[0].innerText,
+              product_ratting: `${product_rating_split[1]}${product_rating_split[2]}`,
+              product_rating_number_of_votes: product_rating_split[3],
+              number_of_order : document.getElementsByClassName("order-num")[0].innerText,
+              number_of_pieces_available: document.getElementsByClassName("p-available-stock")[0].innerText
             })
           })
           console.log(JSON.stringify(result));
